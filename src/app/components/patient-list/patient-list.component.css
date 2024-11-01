@@ -1,0 +1,33 @@
+.table-responsive {
+  margin-top: 1rem;
+}
+
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}
+
+.pagination {
+  margin-bottom: 0;
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+}
+
+.pagination .page-link {
+  cursor: pointer;
+  min-width: 40px;
+  text-align: center;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: white;
+}
+
+.pagination .page-link:disabled {
+  cursor: default;
+  background-color: #f8f9fa;
+  color: #6c757d;
+}

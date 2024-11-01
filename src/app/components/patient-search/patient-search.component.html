@@ -1,0 +1,169 @@
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <div class="d-flex justify-content-between align-items-center">
+        <h3>Search Patients</h3>
+        <button class="btn btn-secondary" (click)="reset()">Reset Filters</button>
+      </div>
+    </div>
+    <div class="card-body">
+      <!-- Search Form -->
+      <form [formGroup]="searchForm" class="row g-3">
+        <!-- Name Search -->
+        <div class="col-md-3">
+          <label for="name" class="form-label">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            formControlName="name"
+            placeholder="Search by name...">
+        </div>
+
+        <!-- State Filter -->
+        <div class="col-md-2">
+          <label for="state" class="form-label">State</label>
+          <select class="form-select" id="state" formControlName="state">
+            <option value="">All States</option>
+            <option *ngFor="let state of states" [value]="state">{{state}}</option>
+          </select>
+        </div>
+
+        <!-- Date Range -->
+        <div class="col-md-2">
+          <label for="startDate" class="form-label">Start Date</label>
+          <input
+            type="date"
+            class="form-control"
+            id="startDate"
+            formControlName="startDate">
+        </div>
+
+        <div class="col-md-2">
+          <label for="endDate" class="form-label">End Date</label>
+          <input
+            type="date"
+            class="form-control"
+            id="endDate"
+            formControlName="endDate">
+        </div>
+
+        <!-- Sort Options -->
+        <div class="col-md-2">
+          <label for="sortBy" class="form-label">Sort By</label>
+          <select class="form-select" id="sortBy" formControlName="sortBy">
+            <option *ngFor="let option of sortOptions" [value]="option">
+              {{option | titlecase}}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-md-2">
+          <label for="sortDirection" class="form-label">Order</label>
+          <select class="form-select" id="sortDirection" formControlName="sortDirection">
+            <option *ngFor="let direction of sortDirections" [value]="direction">
+              {{direction}}
+            </option>
+          </select>
+        </div>
+      </form>
+
+      <!-- Loading Spinner -->
+      <div *ngIf="loading" class="text-center my-4">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+
+      <!-- Results Table -->
+      <div *ngIf="!loading && patients.length > 0" class="table-responsive mt-4">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>PID</th>
+            <th>Name</th>
+            <th>DOB</th>
+            <th>Gender</th>
+            <th>Address</th>
+            <th>State</th>
+            <th>Phone</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let patient of patients">
+            <td>{{patient.pid}}</td>
+            <td>{{patient.firstName}} {{patient.lastName}}</td>
+            <td>{{formatDate(patient.dateOfBirth)}}</td>
+            <td>{{patient.gender}}</td>
+            <td>{{patient.address}}, {{patient.suburb}}</td>
+            <td>{{patient.state}}</td>
+            <td>{{patient.phoneNumber}}</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <!-- Pagination -->
+        <div class="d-flex justify-content-between align-items-center mt-3">
+          <div>
+            Showing {{getStartIndex()}} - {{getEndIndex()}}
+            of {{totalElements}} patients
+          </div>
+          <div class="d-flex align-items-center gap-3">
+            <select
+              class="form-select"
+              style="width: auto;"
+              (change)="onPageSizeChange($event)"
+              [value]="pageSize"
+            >
+              <option [value]="10">10 per page</option>
+              <option [value]="20">20 per page</option>
+              <option [value]="50">50 per page</option>
+            </select>
+
+            <nav aria-label="Page navigation">
+              <ul class="pagination mb-0">
+                <!-- Previous button -->
+                <li class="page-item" [class.disabled]="isFirstPage()">
+                  <button
+                    class="page-link"
+                    (click)="onPageChange(currentPage - 1)"
+                    [disabled]="isFirstPage()"
+                  >
+                    Previous
+                  </button>
+                </li>
+
+                <!-- Page numbers -->
+                <ng-container *ngFor="let page of getPageNumbers()">
+                  <li *ngIf="page !== -1" class="page-item" [class.active]="currentPage === page">
+                    <button class="page-link" (click)="onPageChange(page)">
+                      {{page + 1}}
+                    </button>
+                  </li>
+                  <li *ngIf="page === -1" class="page-item disabled">
+                    <span class="page-link">...</span>
+                  </li>
+                </ng-container>
+
+                <!-- Next button -->
+                <li class="page-item" [class.disabled]="isLastPage()">
+                  <button
+                    class="page-link"
+                    (click)="onPageChange(currentPage + 1)"
+                    [disabled]="isLastPage()"
+                  >
+                    Next
+                  </button>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+
+      <!-- No Results Message -->
+      <div *ngIf="!loading && patients.length === 0" class="alert alert-info mt-4">
+        No patients found matching your search criteria.
+      </div>
+    </div>
+  </div>
+</div>

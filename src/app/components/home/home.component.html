@@ -1,0 +1,44 @@
+<div class="container mt-4">
+  <h2 class="mb-4">Patient Web Application</h2>
+
+  <div class="row g-4">
+    <!-- View Patients -->
+    <div class="col-md-4">
+      <div class="card h-100">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">View Patients</h5>
+          <p class="card-text">Display list of all patients with search and pagination features.</p>
+          <button class="btn btn-primary mt-auto" (click)="navigateToPatientList()">
+            View Patients
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Create Patient -->
+    <div class="col-md-4">
+      <div class="card h-100">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Create Patient</h5>
+          <p class="card-text">Register a new patient in the system.</p>
+          <button class="btn btn-success mt-auto" (click)="navigateToCreatePatient()">
+            Create Patient
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search Patient -->
+    <div class="col-md-4">
+      <div class="card h-100">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Search Patient</h5>
+          <p class="card-text">Find patients by PID or name.</p>
+          <button class="btn btn-info mt-auto" (click)="navigateToSearchPatient()">
+            Search Patient
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

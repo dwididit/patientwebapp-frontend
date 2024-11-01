@@ -1,0 +1,28 @@
+.pagination {
+  margin-bottom: 0;
+  flex-wrap: nowrap;
+}
+
+.page-link {
+  padding: 0.375rem 0.75rem;
+  cursor: pointer;
+}
+
+.page-item.disabled .page-link {
+  cursor: not-allowed;
+}
+
+.form-select {
+  min-width: 100px;
+}
+
+@media (max-width: 768px) {
+  .d-flex {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .pagination {
+    margin-top: 1rem;
+  }
+}
